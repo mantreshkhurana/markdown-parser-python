@@ -7,9 +7,9 @@ here = os.path.abspath(os.path.dirname(__file__))
 with codecs.open(os.path.join(here, "README.md"), encoding="utf-8") as fh:
     long_description = "\n" + fh.read()
 
-VERSION = '0.0.2'
+VERSION = '0.0.3'
 DESCRIPTION = 'A simple markdown parsing package.'
-LONG_DESCRIPTION = 'A package that allows to parse, read and write markdown files.'
+LONG_DESCRIPTION = 'Markdown Worker is a versatile Python module for parsing, reading, and writing Markdown files. It simplifies the process of working with Markdown documents by providing a convenient interface for common tasks.'
 
 # Setting up
 setup(

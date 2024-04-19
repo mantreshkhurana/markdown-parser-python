@@ -1,16 +1,10 @@
 # Markdown Worker
 
-This is a simple markdown parser written in Python. It can read, write and parse markdown files. It can read a particular header, write a particular header, and parse a particular header. It can also parse the entire file.
+Markdown Worker is a versatile Python module for parsing, reading, and writing Markdown files. It simplifies the process of working with Markdown documents by providing a convenient interface for common tasks.
 
 ## Installation
 
-```bash
-# use these commands to install the package source code to your local machine
-git clone https://github.com/mantreshkhurana/markdown-worker-python.git
-cd markdown-worker-python
-```
-
-or
+You can install Markdown Worker via pip:
 
 ```bash
 pip install markdown-worker
@@ -22,23 +16,81 @@ or
 pip3 install markdown-worker
 ```
 
+Alternatively, you can clone the GitHub repository:
+
+```bash
+git clone https://github.com/mantreshkhurana/markdown-worker-python.git
+cd markdown-worker-python
+```
+
+## Features
+
+- Read and parse Markdown files.
+- Search for specific headers within a Markdown file.
+- Retrieve content associated with a particular header.
+- Convert Markdown to HTML.
+- Simple and intuitive API.
+
 ## Usage
 
-I provided a `example.md` file in the repository. You can use that to test the program, it contains all the [documentation](https://github.com/mantreshkhurana/markdown-worker-python/blob/stable/example.md) of the program.
+### Reading and Parsing Markdown Files
 
 ```python
 from markdown_worker import MarkdownParser
 
-file_name = input("Path of the Markdown file: ")
-parser = MarkdownParser(file_name)
+# Initialize the parser with a Markdown file
+parser = MarkdownParser("example.md")
 
-heading_to_search = input("Enter the heading to search: ")
+# Read the entire file
+markdown_content = parser.read_complete_file()
 
+# Extract headers and paragraphs
+headers, paragraphs, _ = parser.extract_headers_and_paragraphs()
+
+# Print the extracted headers
+print("Headers:", headers)
+
+# Print the extracted paragraphs
+print("Paragraphs:", paragraphs)
+```
+
+### Searching for a Header
+
+```python
+from markdown_worker import MarkdownParser
+
+# Initialize the parser with a Markdown file
+parser = MarkdownParser("example.md")
+
+# Search for a specific header
+heading_to_search = "Usage"
 result = parser.search_heading(heading_to_search)
 
-print("\nContent that was under this heading: \n")
-print(result)
+# Print the content under the searched header
+print("Content under the heading:", result)
 ```
+
+### Convert Markdown to HTML
+
+```python
+from markdown_worker import MarkdownParser
+
+# Initialize the parser with a Markdown file
+parser = MarkdownParser("example.md")
+
+# Read the entire file
+markdown_content = parser.read_complete_file()
+
+# Convert Markdown to HTML
+html_content = parser.markdown_to_html(markdown_content)
+
+# Print the HTML content
+print("HTML Content:", html_content)
+```
+
+## Example
+
+An example Markdown file (`example.md`) is provided in the repository, containing documentation for the program.
 
 ## Author
 

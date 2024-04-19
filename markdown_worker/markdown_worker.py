@@ -5,13 +5,18 @@ class MarkdownParser:
         self.filename = filename
         self.markdown_text = self.read_markdown_file() if filename else ""
 
+        self.lines = self.markdown_text.split('\n')
+
     def read_markdown_file(self):
         if self.filename and self.filename.endswith('.md'):
-            with open(self.filename, 'r', encoding='utf-8') as file:
-                markdown_text = file.read()
+            try:
+                with open(self.filename, 'r', encoding='utf-8') as file:
+                    markdown_text = file.read()
                 return markdown_text
+            except IOError:
+                return "Error: unable to read the markdown file."
         else:
-            return "File is not a Markdown file."
+            return "Error: file is not a markdown file."
 
     def extract_headers_and_paragraphs(self):
         header_pattern = r'^#{1,6}\s(.+)$'
@@ -21,8 +26,7 @@ class MarkdownParser:
         paragraphs = []
         header_indices = []
 
-        lines = self.markdown_text.split('\n')
-        for index, line in enumerate(lines):
+        for index, line in enumerate(self.lines):
             header_match = re.match(header_pattern, line)
             paragraph_match = re.match(paragraph_pattern, line)
             
@@ -43,12 +47,12 @@ class MarkdownParser:
             if heading_index + 1 < len(header_indices):
                 end_index = header_indices[heading_index + 1]
             else:
-                end_index = len(self.markdown_text.split('\n'))
+                end_index = len(self.lines)
 
-            content = '\n'.join(self.markdown_text.split('\n')[start_index:end_index])
+            content = '\n'.join(self.lines[start_index:end_index])
             result = content
         else:
-            result = "Heading not found in the Markdown file."
+            result = "Heading not found in the markdown file."
 
         return result
     
@@ -56,16 +60,14 @@ class MarkdownParser:
         return self.markdown_text
     
     def read_line(self, line_number):
-        lines = self.markdown_text.split('\n')
-        if line_number < len(lines):
-            return lines[line_number]
+        if line_number < len(self.lines):
+            return self.lines[line_number]
         else:
             return "Line number out of range."
         
     def read_word(self, line_number, word_number):
-        lines = self.markdown_text.split('\n')
-        if line_number < len(lines):
-            words = lines[line_number].split(' ')
+        if line_number < len(self.lines):
+            words = self.lines[line_number].split(' ')
             if word_number < len(words):
                 return words[word_number]
             else:
@@ -74,9 +76,8 @@ class MarkdownParser:
             return "Line number out of range."
         
     def read_character(self, line_number, word_number, character_number):
-        lines = self.markdown_text.split('\n')
-        if line_number < len(lines):
-            words = lines[line_number].split(' ')
+        if line_number < len(self.lines):
+            words = self.lines[line_number].split(' ')
             if word_number < len(words):
                 characters = list(words[word_number])
                 if character_number < len(characters):
@@ -89,9 +90,8 @@ class MarkdownParser:
             return "Line number out of range."
         
     def read_character_from_line(self, line_number, character_number):
-        lines = self.markdown_text.split('\n')
-        if line_number < len(lines):
-            characters = list(lines[line_number])
+        if line_number < len(self.lines):
+            characters = list(self.lines[line_number])
             if character_number < len(characters):
                 return characters[character_number]
             else:
@@ -100,16 +100,14 @@ class MarkdownParser:
             return "Line number out of range."
         
     def read_character_from_file(self, character_number):
-        characters = list(self.markdown_text)
-        if character_number < len(characters):
-            return characters[character_number]
+        if character_number < len(self.markdown_text):
+            return self.markdown_text[character_number]
         else:
             return "Character number out of range."
         
     def read_word_from_line(self, line_number, word_number):
-        lines = self.markdown_text.split('\n')
-        if line_number < len(lines):
-            words = lines[line_number].split(' ')
+        if line_number < len(self.lines):
+            words = self.lines[line_number].split(' ')
             if word_number < len(words):
                 return words[word_number]
             else:
@@ -133,8 +131,10 @@ class MarkdownParser:
         markdown_text = re.sub(r'`([^`]+)`', r'<code>\1</code>', markdown_text)
 
         if output_filename:
-            with open(output_filename, 'w', encoding='utf-8') as output_file:
-                output_file.write(markdown_text)
+            try:
+                with open(output_filename, 'w', encoding='utf-8') as output_file:
+                    output_file.write(markdown_text)
+            except IOError:
+                return "Error: unable to write to the output file."
 
         return markdown_text
-
