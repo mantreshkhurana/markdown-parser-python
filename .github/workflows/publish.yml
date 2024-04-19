@@ -1,4 +1,4 @@
-name: markdown-worker
+name: markdown_worker
 
 on:
   release:
