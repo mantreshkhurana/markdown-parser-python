@@ -1,5 +1,7 @@
 # Markdown Worker
 
+[![PyPI version](https://badge.fury.io/py/markdown-worker.svg)](https://badge.fury.io/py/markdown-worker)
+
 Markdown Worker is a versatile Python module for parsing, reading, and writing Markdown files. It simplifies the process of working with Markdown documents by providing a convenient interface for common tasks.
 
 ## Installation
