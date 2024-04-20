@@ -13,7 +13,7 @@ LONG_DESCRIPTION = 'Markdown Worker is a versatile Python module for parsing, re
 
 # Setting up
 setup(
-    name="markdown-worker",
+    name="markdown_worker",
     version=VERSION,
     author="Mantresh Khurana",
     author_email="<mantreshkhurana@spyxpo.com>",
